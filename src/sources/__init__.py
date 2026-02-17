@@ -1,29 +1,20 @@
-"""Sources package - search adapters for different platforms."""
+"""Sources package - GitHub, Hacker News, Stack Overflow adapters."""
 
 from .base import BaseSource, SearchResult, SourceRegistry, source_registry
 from .github import GitHubSource
 from .hackernews import HackerNewsSource
+from .stackoverflow import StackOverflowSource
 
-# Initialize and register sources
+
 def initialize_sources():
-    """Initialize and register all source adapters."""
-    github = GitHubSource()
-    hackernews = HackerNewsSource()
-    
-    source_registry.register(github)
-    source_registry.register(hackernews)
-    
-    print("✅ Initialized sources:")
-    print(f"   - GitHub")
-    print(f"   - Hacker News")
+    source_registry.register(GitHubSource())
+    source_registry.register(HackerNewsSource())
+    source_registry.register(StackOverflowSource())
+    print("✅ Sources initialized: GitHub | Hacker News | Stack Overflow")
 
 
 __all__ = [
-    "BaseSource",
-    "SearchResult",
-    "SourceRegistry",
-    "source_registry",
-    "GitHubSource",
-    "HackerNewsSource",
+    "BaseSource", "SearchResult", "SourceRegistry", "source_registry",
+    "GitHubSource", "HackerNewsSource", "StackOverflowSource",
     "initialize_sources",
 ]
