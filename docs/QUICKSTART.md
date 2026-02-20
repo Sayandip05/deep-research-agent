@@ -61,7 +61,7 @@ GITHUB_TOKEN=your_github_token_here
 
 ```bash
 # Test configuration
-python -c "from src.utils.config import validate_required_settings; validate_required_settings()"
+python -c "from config.settings import validate_required_settings; validate_required_settings()"
 ```
 
 You should see: `✅ Configuration validated successfully`
@@ -70,21 +70,21 @@ You should see: `✅ Configuration validated successfully`
 
 ### Option A: Streamlit UI (Easiest)
 ```bash
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 Open browser to: http://localhost:8501
 
 ### Option B: FastAPI Backend
 ```bash
-python -m uvicorn src.api.main:app --reload
+python -m uvicorn backend.api.main:app --reload
 ```
 API available at: http://localhost:8000
 Docs at: http://localhost:8000/docs
 
 ### Option C: Python Script
 ```python
-from src.agent import ResearchAgent
-from src.sources import initialize_sources
+from backend.agent import ResearchAgent
+from backend.sources import initialize_sources
 import asyncio
 
 # Initialize

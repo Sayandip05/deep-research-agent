@@ -20,7 +20,7 @@ deep-agent/
 │   ├── SETUP_COMPLETE.md           # What was built
 │   └── test_setup.py               # Verify setup works
 │
-├── 📁 src/                         # Source code
+├── 📁 backend/                         # Source code
 │   ├── 📁 agent/                   # Research Agent Core
 │   │   ├── research_agent.py       # Main agent (Deep Agents)
 │   │   └── __init__.py
@@ -35,12 +35,18 @@ deep-agent/
 │   │   ├── main.py                 # REST API endpoints
 │   │   └── __init__.py
 │   │
-│   ├── 📁 ui/                      # Frontend
+│   ├── 📁 mcp/                     # Server
+│   │   └── server.py
+│   │
+├── 📁 frontend/                    # Frontend
 │   │   └── app.py                  # Streamlit interface
 │   │
-│   ├── 📁 utils/                   # Utilities
-│   │   ├── config.py               # Configuration management
-│   │   └── __init__.py
+├── 📁 config/                      # Configuration
+│   │   └── settings.py
+│   │
+├── 📁 database/                    # Database Agents
+│   ├── cache_agent.py
+│   └── memory_agent.py
 │   │
 │   ├── 📁 synthesis/               # Synthesis logic (ready for expansion)
 │   │   └── __init__.py
@@ -111,7 +117,7 @@ You should see: ✅ All tests passing
 ### 5️⃣ Run! (30 seconds)
 
 ```bash
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 
 Browser opens automatically! Try:
@@ -189,7 +195,7 @@ Developers waste 2-3 hours researching technical topics across multiple platform
 
 ### Option 1: Streamlit UI (Easiest)
 ```bash
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 - Simple web interface
 - Enter queries
@@ -197,7 +203,7 @@ streamlit run src/ui/app.py
 
 ### Option 2: FastAPI Backend
 ```bash
-uvicorn src.api.main:app --reload
+uvicorn backend.api.main:app --reload
 ```
 - REST API at localhost:8000
 - Docs at localhost:8000/docs
@@ -205,8 +211,8 @@ uvicorn src.api.main:app --reload
 
 ### Option 3: Python Code
 ```python
-from src.agent import ResearchAgent
-from src.sources import initialize_sources
+from backend.agent import ResearchAgent
+from backend.sources import initialize_sources
 import asyncio
 
 initialize_sources()
@@ -290,14 +296,14 @@ venv\Scripts\activate
 python test_setup.py
 
 # 4. Run app
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 
 ### Adding New Source
 1. Create `src/sources/newsource.py`
 2. Inherit from `BaseSource`
 3. Implement `search()` and `is_available()`
-4. Register in `src/sources/__init__.py`
+4. Register in `backend/sources/__init__.py`
 5. Test!
 
 ### Git Workflow
@@ -375,7 +381,7 @@ pip install -r requirements.txt
 copy .env.example .env
 # Add your API keys to .env
 python test_setup.py
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 
 ### First Query:

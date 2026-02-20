@@ -17,7 +17,7 @@ print()
 # Test 1: Configuration
 print("📋 Test 1: Loading Configuration...")
 try:
-    from src.utils.config import settings, validate_required_settings
+    from config.settings import settings, validate_required_settings
     validate_required_settings()
     print("   ✅ Configuration loaded successfully")
     print(f"   - Environment: {settings.environment}")
@@ -37,7 +37,7 @@ print()
 # Test 2: Sources
 print("🔌 Test 2: Initializing Sources...")
 try:
-    from src.sources import initialize_sources, source_registry
+    from backend.sources import initialize_sources, source_registry
     initialize_sources()
     print("   ✅ Sources initialized")
 except Exception as e:
@@ -66,7 +66,7 @@ print()
 # Test 4: Agent Initialization
 print("🤖 Test 4: Initializing Research Agent...")
 try:
-    from src.agent import ResearchAgent
+    from backend.agent import ResearchAgent
     agent = ResearchAgent()
     print("   ✅ Research Agent initialized")
 except Exception as e:
@@ -106,7 +106,7 @@ print()
 # Test 6: API Imports
 print("🌐 Test 6: Testing API Imports...")
 try:
-    from src.api.main import app
+    from backend.api.main import app
     print("   ✅ FastAPI app imports successfully")
 except Exception as e:
     print(f"   ❌ API import failed: {e}")
@@ -133,10 +133,10 @@ print()
 print("🚀 Next Steps:")
 print()
 print("1. Run Streamlit UI:")
-print("   streamlit run src/ui/app.py")
+print("   streamlit run frontend/app.py")
 print()
 print("2. Or run FastAPI backend:")
-print("   python -m uvicorn src.api.main:app --reload")
+print("   python -m uvicorn backend.api.main:app --reload")
 print()
 print("3. Try example queries:")
 print("   - 'Compare Redux vs Zustand'")

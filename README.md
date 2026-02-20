@@ -78,13 +78,13 @@ copy .env.example .env
 
 ```bash
 # Streamlit UI (recommended)
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 
 # FastAPI Backend
-uvicorn src.api.main:app --reload
+uvicorn backend.api.main:app --reload
 
 # MCP Server
-python src/mcp/server.py
+python backend/mcp/server.py
 ```
 
 ## 🤖 7-Agent System
@@ -107,7 +107,7 @@ python src/mcp/server.py
   "mcpServers": {
     "deep-research": {
       "command": "python",
-      "args": ["C:/Users/sayan/AI ML/deep-research-agent/src/mcp/server.py"]
+      "args": ["C:/Users/sayan/AI ML/deep-research-agent/backend/mcp/server.py"]
     }
   }
 }
@@ -165,16 +165,14 @@ deep-research-agent/
 ├── requirements.txt            # All dependencies
 ├── .env.example               # Configuration template
 │
-├── src/
+├── backend/
 │   ├── agents/                # 7-agent system
 │   │   ├── supervisor.py      # LangGraph orchestrator
 │   │   ├── planner.py         # Query analysis
-│   │   ├── cache_agent.py     # Qdrant caching
 │   │   ├── search_coordinator.py  # Parallel search
 │   │   ├── synthesizer.py     # AI synthesis
 │   │   ├── validator.py       # Quality checking
-│   │   ├── memory_agent.py    # Supabase persistence
-│   │   └── state.py           # Shared state definitions
+│   │   ├── state.py           # Shared state definitions
 │   │
 │   ├── sources/               # Source adapters
 │   │   ├── github.py          # GitHub API
@@ -187,12 +185,18 @@ deep-research-agent/
 │   │
 │   ├── mcp/
 │   │   └── server.py          # FastMCP (6 tools)
-│   │
-│   ├── ui/
-│   │   └── app.py             # Streamlit + real-time progress
-│   │
-│   └── utils/
-│       └── config.py          # Pydantic settings
+|   |
+|   └── agent/                 # Research Agent Core
+│
+├── frontend/
+│   └── app.py             # Streamlit + real-time progress
+│
+├── database/
+│   ├── cache_agent.py     # Qdrant caching
+│   └── memory_agent.py    # Supabase persistence
+│
+├── config/
+│   └── settings.py        # Pydantic settings
 │
 └── tests/                     # Test suite
 ```
@@ -248,9 +252,9 @@ CREATE INDEX idx_session ON research_sessions(session_id);
 ```bash
 # Start everything
 docker-compose up -d          # Qdrant
-streamlit run src/ui/app.py   # UI
-uvicorn src.api.main:app --reload  # API
-python src/mcp/server.py      # MCP
+streamlit run frontend/app.py   # UI
+uvicorn backend.api.main:app --reload  # API
+python backend/mcp/server.py      # MCP
 
 # Cache management
 curl http://localhost:6333/dashboard  # Qdrant UI

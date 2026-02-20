@@ -8,7 +8,7 @@ Comprehensive guide to using the Deep Research Agent.
 
 1. **Start the UI:**
 ```bash
-streamlit run src/ui/app.py
+streamlit run frontend/app.py
 ```
 
 2. **Enter your query:**
@@ -25,7 +25,7 @@ streamlit run src/ui/app.py
 
 1. **Start the API:**
 ```bash
-uvicorn src.api.main:app --reload
+uvicorn backend.api.main:app --reload
 ```
 
 2. **Make a request:**
@@ -51,8 +51,8 @@ curl -X POST "http://localhost:8000/research" \
 
 ```python
 import asyncio
-from src.agent import ResearchAgent
-from src.sources import initialize_sources
+from backend.agent import ResearchAgent
+from backend.sources import initialize_sources
 
 async def main():
     # Initialize
@@ -178,7 +178,7 @@ Health check endpoint.
 ```python
 from langchain_groq import ChatGroq
 from deepagents import create_deep_agent
-from src.sources import source_registry
+from backend.sources import source_registry
 
 # Custom LLM
 custom_llm = ChatGroq(
