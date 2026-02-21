@@ -6,13 +6,13 @@ Get your Deep Research Agent up and running in 5 minutes!
 
 - Python 3.11 or higher
 - pip (Python package manager)
-- Git
+- Docker (for Qdrant)
 
-## Step 1: Clone and Setup (2 minutes)
+## Step 1: Setup Environment
 
 ```bash
 # Navigate to the project
-cd "C:\Users\sayan\AI ML\deep-agent"
+cd "C:\Users\sayan\AI ML\deep-research-agent"
 
 # Create virtual environment
 python -m venv venv
@@ -27,7 +27,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Step 2: Get FREE API Keys (3 minutes)
+## Step 2: Get FREE API Keys
 
 ### Required: Groq (LLM)
 1. Go to [console.groq.com](https://console.groq.com)
@@ -57,14 +57,17 @@ GROQ_API_KEY=your_groq_key_here
 GITHUB_TOKEN=your_github_token_here
 ```
 
-## Step 4: Test the Setup
+## Step 4: Start Services & Test
 
 ```bash
-# Test configuration
-python -c "from config.settings import validate_required_settings; validate_required_settings()"
+# Start Qdrant (vector cache)
+docker-compose up -d
+
+# Verify the system
+python test_system.py
 ```
 
-You should see: `✅ Configuration validated successfully`
+You should see: `🎉 ALL CORE SYSTEMS OPERATIONAL`
 
 ## Step 5: Run the Application
 
@@ -81,24 +84,6 @@ python -m uvicorn backend.api.main:app --reload
 API available at: http://localhost:8000
 Docs at: http://localhost:8000/docs
 
-### Option C: Python Script
-```python
-from backend.agent import ResearchAgent
-from backend.sources import initialize_sources
-import asyncio
-
-# Initialize
-initialize_sources()
-agent = ResearchAgent()
-
-# Research
-async def main():
-    result = await agent.research("What is Rust good for?")
-    print(result)
-
-asyncio.run(main())
-```
-
 ## Quick Test Query
 
 Try this query in the UI:
@@ -107,11 +92,6 @@ Compare Redux vs Zustand for React state management
 ```
 
 ## Troubleshooting
-
-### "No module named 'deepagents'"
-```bash
-pip install deepagents
-```
 
 ### "groq_api_key not configured"
 - Make sure you copied `.env.example` to `.env`
@@ -123,17 +103,10 @@ pip install deepagents
 - App will work but skip GitHub searches
 - Add GitHub token to `.env` for full functionality
 
-## Next Steps
-
-- Read [USAGE.md](USAGE.md) for detailed usage examples
-- Check [DEPLOYMENT.md](DEPLOYMENT.md) for hosting instructions
-- See [CONTRIBUTING.md](../CONTRIBUTING.md) for development setup
-
-## Need Help?
-
-- Check [FAQ.md](FAQ.md)
-- Open an issue on GitHub
-- Check the logs in console for error details
+### Import errors
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
