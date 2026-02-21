@@ -1,4 +1,4 @@
-"""Database package - Qdrant cache and Supabase memory."""
+"""Database package - caching and memory agents."""
 
 from .cache_agent import CacheAgent
 from .memory_agent import MemoryAgent
