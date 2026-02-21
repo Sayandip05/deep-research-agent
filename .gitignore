@@ -5,9 +5,10 @@ __pycache__/
 *.so
 .Python
 venv/
+venv*/
 env/
 ENV/
-.venv
+.venv/
 
 # Environment
 .env
@@ -37,11 +38,17 @@ logs/
 # Cache
 .cache/
 *.cache
+.mypy_cache/
+.ruff_cache/
 
 # Distribution
 dist/
 build/
 *.egg-info/
+.eggs/
+
+# Streamlit
+.streamlit/
 
 # Jupyter
 .ipynb_checkpoints
