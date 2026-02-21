@@ -1,4 +1,4 @@
-"""Agents package - 7-agent supervisor system."""
+"""Backend agents package - 7-agent supervisor system."""
 
 from .supervisor import SupervisorAgent
 from .state import AgentState, AgentNames
