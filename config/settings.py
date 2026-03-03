@@ -1,78 +1,92 @@
 """
-Updated configuration with LangSmith, Qdrant, and multi-agent settings.
+config/settings.py
+Centralised settings loaded from environment variables.
+All services import from here — never read os.environ directly.
 """
 
-from pydantic_settings import BaseSettings
-from pydantic import Field
-from typing import Optional, List
+from functools import lru_cache
+from typing import Optional
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-
-    # LLM
-    groq_api_key: str = Field(default="")
-    fast_model: str = Field(default="llama-3.1-8b-instant")
-    smart_model: str = Field(default="llama-3.1-70b-versatile")
-
-    # LangSmith Monitoring
-    langchain_tracing_v2: str = Field(default="true")
-    langchain_endpoint: str = Field(default="https://api.smith.langchain.com")
-    langchain_api_key: str = Field(default="")
-    langchain_project: str = Field(default="deep-research-agent")
-
-    # Source APIs
-    github_token: str = Field(default="")
-
-    # Qdrant Vector DB
-    qdrant_host: str = Field(default="localhost")
-    qdrant_port: int = Field(default=6333)
-    qdrant_collection_name: str = Field(default="research_cache")
-    embedding_model: str = Field(default="all-MiniLM-L6-v2")
-    semantic_cache_threshold: float = Field(default=0.85)
-
-    # Supabase
-    supabase_url: Optional[str] = Field(default=None)
-    supabase_key: Optional[str] = Field(default=None)
-
-    # App
-    environment: str = Field(default="development")
-    debug: bool = Field(default=True)
-    api_host: str = Field(default="0.0.0.0")
-    api_port: int = Field(default=8000)
-    enable_streaming: bool = Field(default=True)
-    max_results_per_source: int = Field(default=10)
-    quality_threshold: float = Field(default=0.70)
-    supervisor_recursion_limit: int = Field(default=25)
-
-    # MCP
-    mcp_server_name: str = Field(default="deep-research-agent")
-
-    # CORS
-    cors_origins: List[str] = Field(
-        default=["http://localhost:3000", "http://localhost:8501"]
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
     )
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    # ── App ───────────────────────────────────────────────────
+    debug: bool = False
+    log_level: str = "INFO"
+    environment: str = "production"
+
+    # ── Auth ──────────────────────────────────────────────────
+    api_secret_key: str = "change_this_to_a_random_32_char_string"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 1440
+
+    # ── LLM ───────────────────────────────────────────────────
+    groq_api_key: str = ""
+    groq_model: str = "llama-3.1-70b-versatile"
+
+    # ── Database ──────────────────────────────────────────────
+    database_url: str = "postgresql://autopilot:autopilot@localhost:5432/autopilot"
+    postgres_user: str = "autopilot"
+    postgres_password: str = "autopilot"
+    postgres_db: str = "autopilot"
+    postgres_host: str = "postgres"
+    postgres_port: int = 5432
+
+    # ── Redis ─────────────────────────────────────────────────
+    redis_url: str = "redis://localhost:6379/0"
+
+    # ── ChromaDB ──────────────────────────────────────────────
+    chroma_host: str = "localhost"
+    chroma_port: int = 8000
+
+    # ── LangSmith ─────────────────────────────────────────────
+    langchain_tracing_v2: bool = True
+    langchain_endpoint: str = "https://api.smith.langchain.com"
+    langchain_api_key: str = ""
+    langchain_project: str = "auto-pilot"
+
+    # ── Telegram ──────────────────────────────────────────────
+    telegram_bot_token: str = ""
+    telegram_webhook_url: str = ""
+
+    # ── Discord ───────────────────────────────────────────────
+    discord_bot_token: str = ""
+    discord_guild_id: str = ""
+
+    # ── Gmail ─────────────────────────────────────────────────
+    gmail_client_id: str = ""
+    gmail_client_secret: str = ""
+    gmail_redirect_uri: str = "http://localhost:8000/auth/gmail/callback"
+    gmail_user_email: str = ""
+
+    # ── Notion ────────────────────────────────────────────────
+    notion_api_key: str = ""
+    notion_database_id: str = ""
+
+    # ── Slack ─────────────────────────────────────────────────
+    slack_bot_token: str = ""
+    slack_app_token: str = ""
+    slack_signing_secret: str = ""
+    slack_channel_id: str = ""
+
+    # ── Service URLs ──────────────────────────────────────────
+    gateway_url: str = "http://localhost:8000"
+    agents_url: str = "http://localhost:8001"
+    memory_url: str = "http://localhost:8002"
 
 
-settings = Settings()
-
-
+@lru_cache()
 def get_settings() -> Settings:
-    return settings
+    """Return cached settings singleton."""
+    return Settings()
 
 
-def validate_required_settings():
-    errors = []
-    if not settings.groq_api_key:
-        errors.append("GROQ_API_KEY is required")
-    if not settings.github_token:
-        print("⚠️  GitHub token not set - GitHub search limited to 60 req/hr")
-    if not settings.langchain_api_key:
-        print("⚠️  LangSmith not configured - tracing disabled")
-    if errors:
-        raise ValueError("\n".join(errors))
-    print("✅ Configuration validated")
+settings = get_settings()
