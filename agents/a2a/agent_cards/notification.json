@@ -1,0 +1,23 @@
+{
+  "name": "notification_agent",
+  "version": "1.0.0",
+  "description": "Sends messages to users via Telegram, Discord, or email. Handles normal and high-priority alerts.",
+  "skills": [
+    {
+      "name": "send_notification",
+      "description": "Send a notification to the user via Telegram or Discord",
+      "input": {
+        "user_key": "string — Telegram chat_id or Discord user_id",
+        "message": "string — notification text (supports Markdown)",
+        "priority": "string — normal | high",
+        "channel": "string — telegram | discord | email"
+      },
+      "output": {
+        "success": "boolean",
+        "channel": "string"
+      }
+    }
+  ],
+  "auth": { "type": "none" },
+  "endpoint": "/a2a/notification"
+}

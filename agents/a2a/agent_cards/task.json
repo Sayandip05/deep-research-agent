@@ -1,0 +1,21 @@
+{
+  "name": "task_agent",
+  "version": "1.0.0",
+  "description": "Creates, updates, and organises tasks in Notion and Trello.",
+  "skills": [
+    {
+      "name": "create_notion_task",
+      "description": "Create a new page/task in a Notion database",
+      "input": { "title": "string", "description": "string", "due_date": "string (optional)", "tags": "array" },
+      "output": { "page_id": "string", "url": "string" }
+    },
+    {
+      "name": "list_notion_tasks",
+      "description": "List tasks from a Notion database with optional filters",
+      "input": { "filter": "object (optional)", "sort": "string (optional)" },
+      "output": { "tasks": "array" }
+    }
+  ],
+  "auth": { "type": "api_key", "header": "Authorization" },
+  "endpoint": "/a2a/task"
+}

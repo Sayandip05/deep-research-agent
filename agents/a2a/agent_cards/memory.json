@@ -1,0 +1,27 @@
+{
+  "name": "memory_agent",
+  "version": "1.0.0",
+  "description": "Reads and writes semantic memories to ChromaDB. Three collections: user_preferences, task_episodes, skill_memory.",
+  "skills": [
+    {
+      "name": "query_preferences",
+      "description": "Retrieve user preferences relevant to a query",
+      "input": { "query": "string", "user_key": "string", "top_k": "integer (default 5)" },
+      "output": { "memories": "array" }
+    },
+    {
+      "name": "store_episode",
+      "description": "Store a completed task episode for future reference",
+      "input": { "task_id": "string", "workflow": "string", "summary": "string", "outcome": "string" },
+      "output": { "stored": "boolean" }
+    },
+    {
+      "name": "query_episodes",
+      "description": "Find similar past task episodes",
+      "input": { "query": "string", "user_key": "string", "top_k": "integer (default 3)" },
+      "output": { "episodes": "array" }
+    }
+  ],
+  "auth": { "type": "none" },
+  "endpoint": "/a2a/memory"
+}

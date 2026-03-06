@@ -1,0 +1,47 @@
+{
+  "name": "browser_agent",
+  "version": "1.0.0",
+  "description": "Controls a real Chromium browser via Playwright. Navigates URLs, scrapes content, fills forms, extracts prices.",
+  "skills": [
+    {
+      "name": "scrape_price",
+      "description": "Navigate to a product URL and extract the current price",
+      "input": {
+        "url": "string"
+      },
+      "output": {
+        "price": "number",
+        "currency": "string",
+        "product_name": "string"
+      }
+    },
+    {
+      "name": "post_to_social",
+      "description": "Open a browser and post text to Twitter/X",
+      "input": {
+        "text": "string",
+        "platform": "string"
+      },
+      "output": {
+        "success": "boolean",
+        "url": "string"
+      }
+    },
+    {
+      "name": "scrape_page",
+      "description": "Scrape full text content from a URL",
+      "input": {
+        "url": "string",
+        "selector": "string (optional)"
+      },
+      "output": {
+        "content": "string",
+        "title": "string"
+      }
+    }
+  ],
+  "auth": {
+    "type": "none"
+  },
+  "endpoint": "/a2a/browser"
+}

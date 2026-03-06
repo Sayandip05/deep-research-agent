@@ -1,0 +1,27 @@
+{
+  "name": "email_agent",
+  "version": "1.0.0",
+  "description": "Reads and sends email via Gmail API. Extracts structured information from email threads.",
+  "skills": [
+    {
+      "name": "read_recent_emails",
+      "description": "Fetch recent emails from Gmail inbox",
+      "input": { "max_results": "integer", "query": "string (optional)" },
+      "output": { "emails": "array" }
+    },
+    {
+      "name": "send_email",
+      "description": "Send an email via Gmail",
+      "input": { "to": "string", "subject": "string", "body": "string" },
+      "output": { "message_id": "string", "success": "boolean" }
+    },
+    {
+      "name": "extract_meeting_info",
+      "description": "Parse an email thread and extract meeting time, participants, and location",
+      "input": { "email_id": "string" },
+      "output": { "proposed_time": "string", "participants": "array", "location": "string" }
+    }
+  ],
+  "auth": { "type": "oauth2", "provider": "google" },
+  "endpoint": "/a2a/email"
+}

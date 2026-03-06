@@ -1,0 +1,24 @@
+{
+  "name": "file_agent",
+  "version": "1.0.0",
+  "description": "Reads and organises the local filesystem. Categorises files by type, moves them to the right folders, and deletes old files.",
+  "skills": [
+    {
+      "name": "organise_downloads",
+      "description": "Scan a folder (default: ~/Downloads), categorise files by type, move them to subfolders, and delete files older than N days",
+      "input": {
+        "folder": "string (optional, default: ~/Downloads)",
+        "dry_run": "boolean (optional, default: false)",
+        "delete_older_than_days": "integer (optional, default: 30)"
+      },
+      "output": {
+        "moved": "array of {file, category}",
+        "deleted": "array of filenames",
+        "summary": "string",
+        "dry_run": "boolean"
+      }
+    }
+  ],
+  "auth": { "type": "none" },
+  "endpoint": "/a2a/file"
+}
